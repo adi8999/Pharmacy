@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharmacy Management System</title>
+  <!-- Tailwind CSS via CDN for immediate usage -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Professional font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-10 bg-gradient-to-b from-white/90 to-white/70 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <h1 class="text-xl sm:text-2xl font-semibold text-slate-800">Pharmacy Management System</h1>
+      <nav class="flex gap-2">
+        <button data-tab="register" class="tab-btn is-active px-3 py-1.5 rounded-md text-sm font-medium bg-gradient-to-b from-sky-600 to-sky-700 text-white shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-300">Register</button>
+        <button data-tab="sale" class="tab-btn px-3 py-1.5 rounded-md text-sm font-medium hover:bg-slate-100 hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-200">Sale</button>
+        <button data-tab="medicines" class="tab-btn px-3 py-1.5 rounded-md text-sm font-medium hover:bg-slate-100 hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-200">Medicines</button>
+        <button data-tab="alerts" class="tab-btn px-3 py-1.5 rounded-md text-sm font-medium hover:bg-slate-100 hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-200">Alerts</button>
+        <button data-tab="reports" class="tab-btn px-3 py-1.5 rounded-md text-sm font-medium hover:bg-slate-100 hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-200">Reports</button>
+        <button data-tab="data" class="tab-btn px-3 py-1.5 rounded-md text-sm font-medium hover:bg-slate-100 hover:-translate-y-[1px] active:translate-y-0 smooth focus-visible:ring-2 focus-visible:ring-sky-200">Data</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Status Bar -->
+    <section id="status-bar" class="mb-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="rounded-lg border border-slate-200 bg-white p-3 hover:shadow-md hover:border-slate-300 hover:bg-sky-50/60 smooth">
+        <div class="text-xs text-slate-500">Total Medicines</div>
+        <div id="stat-total-medicines" class="text-xl font-semibold">0</div>
+      </div>
+      <div class="rounded-lg border border-slate-200 bg-white p-3 hover:shadow-md hover:border-slate-300 hover:bg-amber-50/60 smooth">
+        <div class="text-xs text-slate-500">Low Stock</div>
+        <div id="stat-low-stock" class="text-xl font-semibold">0</div>
+      </div>
+      <div class="rounded-lg border border-slate-200 bg-white p-3 hover:shadow-md hover:border-slate-300 hover:bg-rose-50/60 smooth">
+        <div class="text-xs text-slate-500">Expiring Soon</div>
+        <div id="stat-expiring" class="text-xl font-semibold">0</div>
+      </div>
+      <div class="rounded-lg border border-slate-200 bg-white p-3 hover:shadow-md hover:border-slate-300 hover:bg-emerald-50/60 smooth">
+        <div class="text-xs text-slate-500">Total Sales (Today)</div>
+        <div id="stat-sales-today" class="text-xl font-semibold">0</div>
+      </div>
+    </section>
+
+    <!-- Tabs Content -->
+    <section id="tab-register" class="tab-panel">
+      <div class="rounded-xl border-2 border-sky-300 bg-white p-4 hover:shadow-sm smooth">
+        <h2 class="text-lg font-semibold mb-3">Register Medicine</h2>
+        <form id="form-register" class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Name</label>
+            <input id="reg-name" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Batch No.</label>
+            <input id="reg-batch" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Manufacturer</label>
+            <input id="reg-mfg" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Expiry Date</label>
+            <input id="reg-expiry" type="date" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Price (₹)</label>
+            <input id="reg-price" type="number" min="0" step="0.01" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Stock</label>
+            <input id="reg-stock" type="number" min="0" step="1" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+          </div>
+          <div class="sm:col-span-2 flex items-center justify-between mt-2">
+            <div class="flex items-center gap-2 text-sm text-slate-600">
+              <label class="block">Low-stock threshold</label>
+              <input id="reg-threshold" type="number" min="0" step="1" value="10" class="w-24 rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+            </div>
+            <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-b from-sky-600 to-sky-700 text-white hover:from-sky-600 hover:to-sky-800 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-sky-300 smooth">
+              <span>Save Medicine</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="tab-sale" class="tab-panel hidden">
+      <div class="rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm smooth">
+        <h2 class="text-lg font-semibold mb-3">Handle Sale</h2>
+        <form id="form-sale" class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Medicine</label>
+            <select id="sale-medicine" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500"></select>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-600 mb-1">Quantity</label>
+            <input id="sale-qty" type="number" min="1" step="1" value="1" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+          </div>
+          <div class="sm:col-span-2 flex items-center justify-end mt-2">
+            <button type="submit" class="px-4 py-2 rounded-md bg-gradient-to-b from-emerald-600 to-emerald-700 text-white hover:from-emerald-600 hover:to-emerald-800 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-emerald-300 smooth">Complete Sale</button>
+          </div>
+        </form>
+        <div id="sale-summary" class="mt-4 text-sm text-slate-700"></div>
+      </div>
+    </section>
+
+    <section id="tab-medicines" class="tab-panel hidden">
+      <div class="rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm smooth">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between mb-3">
+          <h2 class="text-lg font-semibold">All Medicines</h2>
+          <div class="flex flex-wrap gap-2">
+            <input id="med-search" type="text" placeholder="Search by name, batch, mfg" class="w-56 rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+            <select id="med-sort" class="rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500">
+              <option value="name">Sort: Name</option>
+              <option value="price">Sort: Price</option>
+              <option value="stock">Sort: Stock</option>
+              <option value="expiry">Sort: Expiry</option>
+            </select>
+          </div>
+        </div>
+        <div class="overflow-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-100 text-slate-700">
+              <tr>
+                <th class="text-left py-2 px-3">Name</th>
+                <th class="text-left py-2 px-3">Batch</th>
+                <th class="text-left py-2 px-3">Mfg</th>
+                <th class="text-left py-2 px-3">Expiry</th>
+                <th class="text-right py-2 px-3">Price</th>
+                <th class="text-right py-2 px-3">Stock</th>
+                <th class="text-right py-2 px-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="med-table" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-alerts" class="tab-panel hidden">
+      <div class="rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm smooth">
+        <h2 class="text-lg font-semibold mb-3">Alerts</h2>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="border rounded-lg p-3 hover:shadow-sm smooth">
+            <h3 class="font-medium mb-2">Low-Stock</h3>
+            <ul id="alert-lowstock" class="list-disc pl-5 text-sm text-slate-700"></ul>
+          </div>
+          <div class="border rounded-lg p-3 hover:shadow-sm smooth">
+            <h3 class="font-medium mb-2">Expiring Soon (30 days)</h3>
+            <ul id="alert-expiring" class="list-disc pl-5 text-sm text-slate-700"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-reports" class="tab-panel hidden">
+      <div class="rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm smooth">
+        <div class="flex flex-col sm:flex-row sm:items-end gap-3 justify-between mb-3">
+          <h2 class="text-lg font-semibold">Sales Report</h2>
+          <div class="flex flex-wrap gap-2 items-end">
+            <div>
+              <label class="block text-xs text-slate-600 mb-1">From</label>
+              <input id="report-from" type="date" class="rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-600 mb-1">To</label>
+              <input id="report-to" type="date" class="rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+            </div>
+            <button id="report-generate" class="px-3 py-2 rounded-md bg-gradient-to-b from-slate-800 to-slate-900 text-white hover:from-slate-800 hover:to-black shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-slate-300 smooth">Generate</button>
+            <button id="report-export" class="px-3 py-2 rounded-md border border-slate-300 hover:bg-slate-50 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-slate-200 smooth">Export CSV</button>
+          </div>
+        </div>
+        <div id="report-summary" class="text-sm text-slate-700 mb-2"></div>
+        <div class="overflow-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-100 text-slate-700">
+              <tr>
+                <th class="text-left py-2 px-3">Date</th>
+                <th class="text-left py-2 px-3">Medicine</th>
+                <th class="text-right py-2 px-3">Qty</th>
+                <th class="text-right py-2 px-3">Unit Price</th>
+                <th class="text-right py-2 px-3">Total</th>
+              </tr>
+            </thead>
+            <tbody id="report-table" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-data" class="tab-panel hidden">
+      <div class="rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm smooth">
+        <h2 class="text-lg font-semibold mb-3">Data Management</h2>
+        <div class="flex flex-wrap gap-2">
+          <button id="data-export" class="px-3 py-2 rounded-md bg-gradient-to-b from-sky-600 to-sky-700 text-white hover:from-sky-600 hover:to-sky-800 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-sky-300 smooth">Export JSON</button>
+          <label class="px-3 py-2 rounded-md border border-slate-300 hover:bg-slate-50 shadow-sm hover:shadow cursor-pointer hover:-translate-y-[1px] active:translate-y-0 smooth">
+            <input id="data-import" type="file" accept="application/json" class="hidden" />
+            Import JSON
+          </label>
+          <button id="data-clear" class="px-3 py-2 rounded-md bg-gradient-to-b from-rose-600 to-rose-700 text-white hover:from-rose-600 hover:to-rose-800 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-rose-300 smooth">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="hidden fixed inset-0 z-20 items-center justify-center">
+    <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+    <div class="relative bg-white rounded-lg shadow-xl w-[95vw] max-w-2xl p-4">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-semibold">Update Medicine</h3>
+        <button id="edit-close" class="p-1 rounded hover:bg-slate-100">✕</button>
+      </div>
+      <form id="form-edit" class="grid sm:grid-cols-2 gap-4">
+        <input id="edit-id" type="hidden" />
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Name</label>
+          <input id="edit-name" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Batch No.</label>
+          <input id="edit-batch" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Manufacturer</label>
+          <input id="edit-mfg" type="text" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Expiry Date</label>
+          <input id="edit-expiry" type="date" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Price (₹)</label>
+          <input id="edit-price" type="number" min="0" step="0.01" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 mb-1">Stock</label>
+          <input id="edit-stock" type="number" min="0" step="1" class="w-full rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" required />
+        </div>
+        <div class="sm:col-span-2 flex items-center justify-between mt-2">
+          <div class="flex items-center gap-2 text-sm text-slate-600">
+            <label class="block">Low-stock threshold</label>
+            <input id="edit-threshold" type="number" min="0" step="1" class="w-24 rounded-md border-slate-300 focus:border-sky-500 focus:ring-sky-500" />
+          </div>
+          <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-b from-sky-600 to-sky-700 text-white hover:from-sky-600 hover:to-sky-800 shadow-sm hover:shadow hover:-translate-y-[1px] active:translate-y-0 focus-visible:ring-2 focus-visible:ring-sky-300 smooth">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+  <script>
+    // Simple tab switcher with active underline + gradient
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('is-active','bg-gradient-to-b','from-sky-600','to-sky-700','text-white');
+        });
+        btn.classList.add('is-active','bg-gradient-to-b','from-sky-600','to-sky-700','text-white');
+        const tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById(`tab-${tab}`).classList.remove('hidden');
+        // Update body accent color per tab
+        document.body.setAttribute('data-tab', tab);
+      });
+    });
+    // Set initial accent for default active tab
+    document.body.setAttribute('data-tab', 'register');
+  </script>
+</body>
+</html>
+
+
